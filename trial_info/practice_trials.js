@@ -1,7 +1,7 @@
 var practice_trials = [
     {focalColor: "#414f6f",
      otherColor: "#ff6347",
-     focalShape: "circle",
+     focalShape: "triangle",
      focalNumber: 5,
      otherShape: "square",
      size: 30,

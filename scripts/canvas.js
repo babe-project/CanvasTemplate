@@ -10,9 +10,10 @@ var createCanvas = function(canvasElem) {
         } else if (shape === 'square') {
             context.rect(x - (size / 2), y - (size / 2), size, size);
         } else if (shape === 'triangle') {
-            context.moveTo(x, y + 15);
-            context.lineTo(x + (size / 2), y + 15); 
-            context.lineTo(x + size, y - 15);
+            var delta = size / (Math.sqrt(3)*2);
+            context.moveTo(x - (size / 2), y + delta);
+            context.lineTo(x + (size / 2), y + delta);
+            context.lineTo(x, y - 2*delta);
         }
         context.closePath();
         context.fill();
@@ -21,12 +22,13 @@ var createCanvas = function(canvasElem) {
     canvas.getCoords = function(number, size) {
         var coords = [];
         var margin = size / 2;
+        console.log(canvasElem.width);
 
         var generateCoords = function() {
-            var maxWidth = canvasElem.width - margin;
-            var maxHeight = canvasElem.height - margin;
-            var xPos = Math.floor(Math.random() * (maxWidth - margin)) + margin;
-            var yPos = Math.floor(Math.random() * (maxHeight - margin)) + margin;
+            var maxWidth = canvasElem.width - size;
+            var maxHeight = canvasElem.height - size;
+            var xPos = Math.floor(Math.random() * (maxWidth - 2*size)) + margin;
+            var yPos = Math.floor(Math.random() * (maxHeight - 2*size)) + margin;
             
             return {x: xPos, y: yPos};
         };
@@ -50,7 +52,7 @@ var createCanvas = function(canvasElem) {
             } else {
                 generatePositions();
             }      
-        }
+        };
 
         for (i=0; i<number; i++) {
             generatePositions();
