@@ -70,6 +70,13 @@ var practice = {
             trial_data = {
                 trial_type: "practice",
                 trial_number: CT+1,
+                focalShape: exp.trial_info.practice_trials[CT].focalShape,
+                otherShape: exp.trial_info.practice_trials[CT].otherShape,
+                focalNumber: exp.trial_info.practice_trials[CT].focalNumber,
+                otherNumber: exp.trial_info.practice_trials[CT].total - exp.trial_info.practice_trials[CT].focalNumber,
+                total: exp.trial_info.practice_trials[CT].total,
+                focalColor: exp.trial_info.practice_trials[CT].focalColor,
+                otherColor: exp.trial_info.practice_trials[CT].otherColor,
                 RT: RT
             };
             exp.trial_data.push(trial_data)
@@ -120,6 +127,13 @@ var main = {
             trial_data = {
                 trial_type: "main",
                 trial_number: CT + 1,
+                focalShape: exp.trial_info.main_trials[CT].focalShape,
+                otherShape: exp.trial_info.main_trials[CT].otherShape,
+                focalNumber: exp.trial_info.main_trials[CT].focalNumber,
+                otherNumber: exp.trial_info.main_trials[CT].total - exp.trial_info.main_trials[CT].focalNumber,
+                total: exp.trial_info.main_trials[CT].total,
+                focalColor: exp.trial_info.main_trials[CT].focalColor,
+                otherColor: exp.trial_info.main_trials[CT].otherColor,
                 RT: RT
             };
             exp.trial_data.push(trial_data);
