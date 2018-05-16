@@ -8,7 +8,7 @@ var createCanvas = function(canvasElem) {
         if (shape === 'circle') {
             context.arc(x, y, size / 2, 0, 2*Math.PI);
         } else if (shape === 'square') {
-            context.rect(x, y, size, size);
+            context.rect(x - (size / 2), y - (size / 2), size, size);
         } else if (shape === 'triangle') {
             context.moveTo(x, y + 15);
             context.lineTo(x + (size / 2), y + 15); 
