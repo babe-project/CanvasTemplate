@@ -27,8 +27,8 @@ var createCanvas = function(canvasElem) {
         var generateCoords = function() {
             var maxWidth = canvasElem.width - size;
             var maxHeight = canvasElem.height - size;
-            var xPos = Math.floor(Math.random() * (maxWidth - 2*size)) + margin;
-            var yPos = Math.floor(Math.random() * (maxHeight - 2*size)) + margin;
+            var xPos = Math.floor(Math.random() * (maxWidth - size)) + size;
+            var yPos = Math.floor(Math.random() * (maxHeight - size)) + size;
             
             return {x: xPos, y: yPos};
         };
