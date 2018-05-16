@@ -65,18 +65,11 @@ var practice = {
         // draws the shapes on the canvas
         drawOnCanvas(document.getElementById('canvas'), exp.trial_info.practice_trials[CT]);
 
-        // attaches an event listener to the yes / no radio inputs
-        // when an input is selected a response property with a value equal to the answer is added to the trial object
-        // as well as a readingTimes property with value - a list containing the reading times of each word
-        $('input[name=answer]').on('change', function() {
+        $('#next').on('click', function() {
             RT = Date.now() - startingTime; // measure RT before anything else
             trial_data = {
                 trial_type: "practice",
                 trial_number: CT+1,
-                question: exp.trial_info.practice_trials[CT].question,
-                option1: exp.trial_info.practice_trials[CT].option1,
-                option2: exp.trial_info.practice_trials[CT].option2,
-                option_chosen: $('input[name=answer]:checked').val(),
                 RT: RT
             };
             exp.trial_data.push(trial_data)
@@ -122,17 +115,11 @@ var main = {
         drawOnCanvas(document.getElementById('canvas'), exp.trial_info.main_trials[CT]);
 
 
-        // event listener for buttons; when an input is selected, the response
-		// and additional information are stored in exp.trial_info
-        $('input[name=answer]').on('change', function() {
+        $('#next').on('click', function() {
             RT = Date.now() - startingTime; // measure RT before anything else
             trial_data = {
-                trial_type: "mainForcedChoice",
+                trial_type: "main",
                 trial_number: CT + 1,
-                question: exp.trial_info.main_trials[CT].question,
-                option1:  exp.trial_info.main_trials[CT].option1,
-                option2:  exp.trial_info.main_trials[CT].option2,
-                option_chosen: $('input[name=answer]:checked').val(),
                 RT: RT
             };
             exp.trial_data.push(trial_data);

@@ -4,7 +4,6 @@ var createCanvas = function(canvasElem) {
 
     canvas.draw = function(shape, size, x, y, color) {
         context.beginPath();
-        context.fillStyle = color;
         if (shape === 'circle') {
             context.arc(x, y, size / 2, 0, 2*Math.PI);
         } else if (shape === 'square') {
@@ -14,6 +13,17 @@ var createCanvas = function(canvasElem) {
             context.moveTo(x - (size / 2), y + delta);
             context.lineTo(x + (size / 2), y + delta);
             context.lineTo(x, y - 2*delta);
+        }
+        if (color === 'blue') {
+            context.fillStyle = '#2c89df';
+        } else if (color === 'green') {
+            context.fillStyle = '#22ce59';
+        } else if (color === 'red') {
+            context.fillStyle = '#ff6347';
+        } else if (color === 'yellow') {
+            context.fillStyle = '#ecd70b';
+        } else {
+            context.fillStyle = color;
         }
         context.closePath();
         context.fill();
