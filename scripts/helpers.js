@@ -20,7 +20,6 @@ var shuffleComb = function(comb) {
 var drawOnCanvas = function(canvasElem, trialInfo) {
     var canvas = createCanvas(document.getElementById('canvas'));
     var coords = canvas.getCoords(trialInfo.total, trialInfo.size);
-
     for (var i=0; i<trialInfo.total; i++) {
         if (i < trialInfo.focalNumber) {
             canvas.draw(trialInfo.focalShape, trialInfo.size, coords[i].x, coords[i].y, trialInfo.focalColor);
