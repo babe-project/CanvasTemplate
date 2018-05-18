@@ -71,6 +71,11 @@ button {
     text-transform: uppercase;
 }
 
+.practice-view button,
+.trial-view button {
+    margin: 20px auto;
+}
+
 /* buttons when covered or clicked */
 button:hover,
 button:focus {

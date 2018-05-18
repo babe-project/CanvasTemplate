@@ -77,6 +77,7 @@ var practice = {
                 total: exp.trial_info.practice_trials[CT].total,
                 focalColor: exp.trial_info.practice_trials[CT].focalColor,
                 otherColor: exp.trial_info.practice_trials[CT].otherColor,
+                rows: exp.trial_info.practice_trials[CT].rows,
                 RT: RT
             };
             exp.trial_data.push(trial_data)
@@ -120,7 +121,7 @@ var main = {
         $('#filled').css('width', filled);
         // draws the shapes on the canvas
         drawOnCanvas(document.getElementById('canvas'), exp.trial_info.main_trials[CT]);
-
+        console.log(exp.trial_info.main_trials[CT]);
 
         $('#next').on('click', function() {
             RT = Date.now() - startingTime; // measure RT before anything else
@@ -134,6 +135,7 @@ var main = {
                 total: exp.trial_info.main_trials[CT].total,
                 focalColor: exp.trial_info.main_trials[CT].focalColor,
                 otherColor: exp.trial_info.main_trials[CT].otherColor,
+                rows: exp.trial_info.main_trials[CT].rows,
                 RT: RT
             };
             exp.trial_data.push(trial_data);

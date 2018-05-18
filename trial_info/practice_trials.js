@@ -4,8 +4,9 @@ var practice_trials = [
      focalShape: "triangle",
      focalNumber: 5,
      otherShape: "square",
-     size: 30,
-     total: 10
+     size: 40,
+     total: 10,
+     rows: 2
     },
     {focalColor: "blue",
      otherColor: "yellow",
@@ -13,14 +14,16 @@ var practice_trials = [
      focalNumber: 6,
      otherShape: "circle",
      size: 30,
-     total: 20
+     total: 20,
+     rows: 4
     },
-    {focalColor: "green",
+    {focalColor: "red",
      otherColor: "red",
      focalShape: "circle",
-     focalNumber: 2,
+     focalNumber: 5,
      otherShape: "square",
-     size: 30,
-     total: 15
+     size: 50,
+     total: 15,
+     rows: 3
     }
 ];

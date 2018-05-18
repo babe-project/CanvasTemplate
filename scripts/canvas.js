@@ -29,10 +29,49 @@ var createCanvas = function(canvasElem) {
         context.fill();
     };
 
-    canvas.getCoords = function(number, size) {
+    canvas.getGridCoords = function(rows, number, size) {
         var coords = [];
         var margin = size / 2;
-        console.log(canvasElem.width);
+        var columns, xStart, yStart;
+
+        if (rows === 0 || rows === undefined) {
+            rows = 1;
+        } else if (rows > number) {
+            rows = number;
+        }
+        
+        columns = Math.ceil(number / rows);
+        xStart = (canvasElem.width - (columns * size + (columns - 2) * margin)) / 2 + margin / 2;
+        yStart = (canvasElem.height - (rows * size + (rows - 2) * margin)) / 2 + margin;
+
+        // handles small canvases
+        if (xStart < margin) {
+            canvasElem.width += -2*xStart;
+            xStart = margin;
+        }
+
+        if (yStart < margin) {
+            console.log('true');
+            canvasElem.height += -2*yStart;
+            yStart = margin;
+        }
+
+        for (var i=0; i<rows; i++) {
+            for (var j=0; j<number; j++) {
+                if (Math.floor(j/columns) === i) {
+                    coords.push({x: xStart + (j%columns)*size + (j%columns)*margin, y: yStart + i*size + i*margin})
+                } else {
+                    continue;
+                }
+            }
+        }
+
+        return coords;
+    };
+
+    canvas.getRandomCoords = function(number, size) {
+        var coords = [];
+        var margin = size / 2;
 
         var generateCoords = function() {
             var maxWidth = canvasElem.width - size;
