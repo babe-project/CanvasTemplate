@@ -5,8 +5,8 @@ var config_deploy = {
     // needed to recover data from server app
     "author": "RandomJane",
     // needed to recover data from server app
-    "experiment_id": "MinimalTemplateDEMO", 
-    "description": "A minimal template for a browser-based experiment",
+    "experiment_id": "CanvasTemplateDemo", 
+    "description": "A _babe template using canvas functions",
 
     // set deployment method; use one of:
     //'debug', 'localServer', 'MTurk', 
