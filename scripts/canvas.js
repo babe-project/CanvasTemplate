@@ -29,7 +29,7 @@ var createCanvas = function(canvasElem) {
         context.fill();
     };
 
-    canvas.getCoords = function(number, size) {
+    canvas.getRandomCoords = function(number, size) {
         var coords = [];
         var margin = size / 2;
         console.log(canvasElem.width);
