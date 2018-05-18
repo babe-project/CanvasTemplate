@@ -8,7 +8,8 @@ takes:
 - `canvasElem`: html canvas
 
 returns:
-- canvas object with three methods - `getRandomCoords`, `getGridCoords` and `draw`.
+- canvas object with the following methods:
+`getRandomCoords`, `getGridCoords`, `getTwoSidedCoords` and `draw`.
 
 
 ### **`canvas.getRandomCoords(numberOfElems, elemSize)`**
@@ -24,6 +25,15 @@ takes:
 
 takes:
 - `numberOfRows` (int): the number of rows in the grid (might create one more if the numberOfElem / rows is not an int)
+- `numberOfElems` (int): the number of elemets
+- `elemSize` (int): the size of a single element
+
+
+### **`canvas.getTwoSidedCoords(numberOfRows, gap, numberOfElems, elemSize)`**
+
+takes:
+- `numberOfRows` (int): the number of rows in the grid (might create one more if the numberOfElem / rows is not an int)
+- `gap` (int): the gap between the two sides
 - `numberOfElems` (int): the number of elemets
 - `elemSize` (int): the size of a single element
 
