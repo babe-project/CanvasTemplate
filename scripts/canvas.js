@@ -29,6 +29,47 @@ var createCanvas = function(canvasElem) {
         context.fill();
     };
 
+    canvas.getTwoSidedCoords = function(rows, gap, number, size) {
+        var coords = [];
+        var margin = size / 2;
+        var columns, xStart, yStart;
+
+        if (rows === 0 || rows === undefined) {
+            rows = 1;
+        } else if (rows > number) {
+            rows = number;
+        }
+
+        gap = (gap <= size + margin || gap === undefined) ? (margin + size) : gap;
+        
+        columns = Math.ceil(number / rows);
+        xStart = (canvasElem.width - (columns * size + (columns - 2) * margin)) / 2 + margin / 2 - gap / 2;
+        yStart = (canvasElem.height - (rows * size + (rows - 2) * margin)) / 2 + margin;
+
+        // handles small canvases
+        if (xStart < margin) {
+            canvasElem.width += -2*xStart;
+            xStart = margin;
+        }
+
+        if (yStart < margin) {
+            canvasElem.height += -2*yStart;
+            yStart = margin;
+        }
+
+        for (var i=0; i<rows; i++) {
+            for (var j=0; j<number; j++) {
+                if ((Math.floor(j/columns) === i) && (j%columns >= Math.ceil(columns / 2))) {
+                    coords.push({x: xStart + (j%columns)*size + (j%columns)*margin + gap, y: yStart + i*size + i*margin})
+                } else if (Math.floor(j/columns) === i) {
+                    coords.push({x: xStart + (j%columns)*size + (j%columns)*margin, y: yStart + i*size + i*margin})
+                }
+            }
+        }
+
+        return coords;
+    };
+
     canvas.getRandomCoords = function(number, size) {
         var coords = [];
         var margin = size / 2;
