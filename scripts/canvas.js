@@ -29,42 +29,102 @@ var createCanvas = function(canvasElem) {
         context.fill();
     };
 
-    canvas.getTwoSidedCoords = function(rows, gap, number, size) {
+    canvas.getTwoSidedCoords = function(rows, gap, number, size, direction) {
+        // a list of coords
         var coords = [];
+        var tempCoords = [];
+        // the space between the elems
         var margin = size / 2;
         var columns, xStart, yStart;
 
-        if (rows === 0 || rows === undefined) {
-            rows = 1;
-        } else if (rows > number) {
-            rows = number;
-        }
-
+        // reset the rows if not passed or more than the total elems
+        rows = (rows === 0 || rows === undefined) ? 1 : rows;
+        rows = (rows > number) ? number : rows;
+        // sets a gap if not specified
         gap = (gap <= size + margin || gap === undefined) ? (margin + size) : gap;
-        
+        // calculates the total number of columns per side
         columns = Math.ceil(number / rows);
+        // gets the first coordinate so that the elems are centered on the canvas
         xStart = (canvasElem.width - (columns * size + (columns - 2) * margin)) / 2 + margin / 2 - gap / 2;
         yStart = (canvasElem.height - (rows * size + (rows - 2) * margin)) / 2 + margin;
 
-        // handles small canvases
+        // expands the canvas if needed
         if (xStart < margin) {
             canvasElem.width += -2*xStart;
             xStart = margin;
         }
 
+        // expands the canvas if needed
         if (yStart < margin) {
             canvasElem.height += -2*yStart;
             yStart = margin;
         }
 
+        // generates the coords
+        // for each row
         for (var i=0; i<rows; i++) {
+            // for each elem
             for (var j=0; j<number; j++) {
+                // x position, y position
+                var xPos, yPos;
+                 // position on the right
                 if ((Math.floor(j/columns) === i) && (j%columns >= Math.ceil(columns / 2))) {
-                    coords.push({x: xStart + (j%columns)*size + (j%columns)*margin + gap, y: yStart + i*size + i*margin})
+                    xPos = xStart + (j%columns)*size + (j%columns)*margin + gap;
+                    yPos = yStart + i*size + i*margin;
+                    tempCoords.push({x: xPos, y: yPos});
+                // position on the left
                 } else if (Math.floor(j/columns) === i) {
-                    coords.push({x: xStart + (j%columns)*size + (j%columns)*margin, y: yStart + i*size + i*margin})
+                    xPos = xStart + (j%columns)*size + (j%columns)*margin;
+                    yPos = yStart + i*size + i*margin
+                    tempCoords.push({x: xPos, y: yPos});
                 }
             }
+        }
+
+        // placement of the coords
+        /*
+            000  00-
+            ---  ---
+            ---  ---
+        */ 
+        if (direction === 'row' || direction === undefined) {
+            coords = tempCoords;
+        /*
+            000  ---
+            00-  ---
+            ---  ---
+        */
+        } else if (direction === 'sideRow') {
+            for (var i=0; i<tempCoords.length; i++) {
+                if (i%columns < columns/2) {
+                    coords.push(tempCoords[i]);
+                }
+            }
+
+            for (var i=0; i<tempCoords.length; i++) {
+                if (i%columns >= columns/2) {
+                    coords.push(tempCoords[i]);
+                }
+            }
+        /*
+            00-  ---
+            00-  ---
+            0--  ---
+        */ 
+        /* } else if (direction === 'sideColumn') {
+            for (var i=0; i<tempCoords.length; i++) {
+                if (i === 0) {
+                    coords[i] = tempCoords[i];
+                }
+
+                if (i%2 === 0) {
+                    coords[i%2] = tempCoords[i];
+                } else {
+                    coords[columns - 1 + i] = tempCoords[i];
+                }
+
+                console.log(coords[i]);
+            }*/
         }
 
         return coords;

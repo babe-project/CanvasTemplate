@@ -62,6 +62,7 @@ var practice = {
         title: this.title,
         }));
         startingTime = Date.now();
+        console.log(exp.trial_info.practice_trials[CT]);
         // draws the shapes on the canvas
         drawOnCanvas(document.getElementById('canvas'), exp.trial_info.practice_trials[CT]);
 
@@ -118,6 +119,7 @@ var main = {
 		// update the progress bar based on how many trials there are in this round
         var filled = exp.currentTrialInViewCounter * (180 / exp.views_seq[exp.currentViewCounter].trials);
         $('#filled').css('width', filled);
+        console.log(exp.trial_info.main_trials[CT]);
         // draws the shapes on the canvas
         drawOnCanvas(document.getElementById('canvas'), exp.trial_info.main_trials[CT]);
 
