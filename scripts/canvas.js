@@ -51,7 +51,6 @@ var createCanvas = function(canvasElem) {
         }
 
         if (yStart < margin) {
-            console.log('true');
             canvasElem.height += -2*yStart;
             yStart = margin;
         }

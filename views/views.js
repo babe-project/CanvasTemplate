@@ -121,7 +121,6 @@ var main = {
         $('#filled').css('width', filled);
         // draws the shapes on the canvas
         drawOnCanvas(document.getElementById('canvas'), exp.trial_info.main_trials[CT]);
-        console.log(exp.trial_info.main_trials[CT]);
 
         $('#next').on('click', function() {
             RT = Date.now() - startingTime; // measure RT before anything else
