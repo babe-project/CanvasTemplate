@@ -6,7 +6,7 @@ var main_trials = [
      otherShape: "square",
      size: 30,
      total: 10,
-     rows: 3
+     rows: 2
     },
     {focalColor: "blue",
      otherColor: "red",
@@ -14,17 +14,17 @@ var main_trials = [
      focalNumber: 5,
      otherShape: "circle",
      size: 30,
-     total: 10,
-     rows: 8
+     total: 16,
+     rows: 4
     },
     {focalColor: "red",
      otherColor: "red",
      focalShape: "square",
      focalNumber: 20,
      otherShape: "triangle",
-     size: 16,
+     size: 20,
      total: 50,
-     rows: 2
+     rows: 5
     },
     {focalColor: "blue",
      otherColor: "red",
@@ -33,7 +33,9 @@ var main_trials = [
      otherShape: "circle",
      size: 30,
      total: 10,
-     rows: 4
+     rows: 4,
+     total: 12,
+     rows: 2
     },
     {focalColor: "green",
      otherColor: "red",
@@ -41,7 +43,7 @@ var main_trials = [
      focalNumber: 1,
      otherShape: "circle",
      size: 30,
-     total: 5,
+     total: 4,
      rows: 1
     }
 ];

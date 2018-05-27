@@ -29,48 +29,112 @@ var createCanvas = function(canvasElem) {
         context.fill();
     };
 
-<<<<<<< HEAD
-=======
-    canvas.getGridCoords = function(rows, number, size) {
+    canvas.getTwoSidedCoords = function(rows, gap, number, size, direction) {
+        // a list of coords
         var coords = [];
+        var tempCoords = [];
+        // the space between the elems
         var margin = size / 2;
         var columns, xStart, yStart;
 
-        if (rows === 0 || rows === undefined) {
-            rows = 1;
-        } else if (rows > number) {
-            rows = number;
-        }
-        
+        // reset the rows if not passed or more than the total elems
+        rows = (rows === 0 || rows === undefined) ? 1 : rows;
+        rows = (rows > number) ? number : rows;
+        // sets a gap if not specified
+        gap = (gap <= size + margin || gap === undefined) ? (margin + size) : gap;
+        // calculates the total number of columns per side
         columns = Math.ceil(number / rows);
-        xStart = (canvasElem.width - (columns * size + (columns - 2) * margin)) / 2 + margin / 2;
+        // gets the first coordinate so that the elems are centered on the canvas
+        xStart = (canvasElem.width - (columns * size + (columns - 2) * margin)) / 2 + margin / 2 - gap / 2;
         yStart = (canvasElem.height - (rows * size + (rows - 2) * margin)) / 2 + margin;
 
-        // handles small canvases
+        // expands the canvas if needed
         if (xStart < margin) {
             canvasElem.width += -2*xStart;
             xStart = margin;
         }
 
+        // expands the canvas if needed
         if (yStart < margin) {
             canvasElem.height += -2*yStart;
             yStart = margin;
         }
 
+        // generates the coords
+        // for each row
         for (var i=0; i<rows; i++) {
+            // for each elem
             for (var j=0; j<number; j++) {
-                if (Math.floor(j/columns) === i) {
-                    coords.push({x: xStart + (j%columns)*size + (j%columns)*margin, y: yStart + i*size + i*margin})
-                } else {
-                    continue;
+                // x position, y position
+                var xPos, yPos;
+                 // position on the right
+                if ((Math.floor(j/columns) === i) && (j%columns >= Math.ceil(columns / 2))) {
+                    xPos = xStart + (j%columns)*size + (j%columns)*margin + gap;
+                    yPos = yStart + i*size + i*margin;
+                    tempCoords.push({x: xPos, y: yPos});
+                // position on the left
+                } else if (Math.floor(j/columns) === i) {
+                    xPos = xStart + (j%columns)*size + (j%columns)*margin;
+                    yPos = yStart + i*size + i*margin
+                    tempCoords.push({x: xPos, y: yPos});
                 }
+            }
+        }
+
+        // coords' position on the canvas
+        /*
+            ----------------
+            |              |
+            |   000  00x   |
+            |   xxx  xxx   |
+            |   xxx  xxx   |
+            |              |
+            ----------------
+        */ 
+        if (direction === 'row' || direction === undefined) {
+            coords = tempCoords;
+        /*
+            ----------------
+            |              |
+            |   000  xxx   |
+            |   00x  xxx   |
+            |   xxx  xxx   |
+            |              |
+            ----------------
+        */ 
+        } else if (direction === 'sideRow') {
+            var leftPart = [];
+            var rightPart = [];
+            for (var i=0; i<tempCoords.length; i++) {
+                if (i%columns < columns/2) {
+                    leftPart.push(tempCoords[i]);
+                } else {
+                    rightPart.push(tempCoords[i]);
+                }
+            }
+
+            coords = leftPart.concat(rightPart);
+        /*
+            ----------------
+            |              |
+            |   00x  xxx   |
+            |   00x  xxx   |
+            |   0xx  xxx   |
+            |              |
+            ----------------
+        */ 
+         } else if (direction === 'column') {
+            var idx;
+
+            for (var i=0; i<tempCoords.length; i++) {
+                idx = ((i%rows) * columns) + Math.floor(i/rows);
+                coords.push(tempCoords[idx]);
             }
         }
 
         return coords;
     };
 
->>>>>>> gridCoords
     canvas.getRandomCoords = function(number, size) {
         var coords = [];
         var margin = size / 2;
@@ -107,6 +171,46 @@ var createCanvas = function(canvasElem) {
 
         for (i=0; i<number; i++) {
             generatePositions();
+        }
+
+        return coords;
+    };
+
+    canvas.getGridCoords = function(rows, number, size) {
+        var coords = [];
+        var margin = size / 2;
+        var columns, xStart, yStart;
+
+        if (rows === 0 || rows === undefined) {
+            rows = 1;
+        } else if (rows > number) {
+            rows = number;
+        }
+        
+        columns = Math.ceil(number / rows);
+        xStart = (canvasElem.width - (columns * size + (columns - 2) * margin)) / 2 + margin / 2;
+        yStart = (canvasElem.height - (rows * size + (rows - 2) * margin)) / 2 + margin;
+
+        // handles small canvases
+        if (xStart < margin) {
+            canvasElem.width += -2*xStart;
+            xStart = margin;
+        }
+
+        if (yStart < margin) {
+            console.log('true');
+            canvasElem.height += -2*yStart;
+            yStart = margin;
+        }
+
+        for (var i=0; i<rows; i++) {
+            for (var j=0; j<number; j++) {
+                if (Math.floor(j/columns) === i) {
+                    coords.push({x: xStart + (j%columns)*size + (j%columns)*margin, y: yStart + i*size + i*margin})
+                } else {
+                    continue;
+                }
+            }
         }
 
         return coords;

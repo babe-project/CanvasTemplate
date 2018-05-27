@@ -2,11 +2,12 @@ var practice_trials = [
     {focalColor: "blue",
      otherColor: "red",
      focalShape: "triangle",
-     focalNumber: 5,
+     focalNumber: 4,
      otherShape: "square",
-     size: 40,
-     total: 10,
-     rows: 2
+     size: 30,
+     total: 16,
+     rows: 2,
+     gap: 100
     },
     {focalColor: "blue",
      otherColor: "yellow",
@@ -15,15 +16,17 @@ var practice_trials = [
      otherShape: "circle",
      size: 30,
      total: 20,
-     rows: 4
+     rows: 2,
+     gap: 60
     },
     {focalColor: "red",
      otherColor: "red",
      focalShape: "circle",
      focalNumber: 5,
      otherShape: "square",
-     size: 50,
-     total: 15,
-     rows: 3
+     size: 30,
+     total: 18,
+     rows: 3,
+     gap: 50
     }
 ];
