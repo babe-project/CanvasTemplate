@@ -16,8 +16,6 @@ returns:
 
 #### **`canvas.getRandomCoords(numberOfElems, elemSize)`**
 
-Generates `numberOfElems` random coordinates for a canvas with elements of `elemSize`.
-
     ----------------
     |      x    o  |
     |  x           |
@@ -26,14 +24,14 @@ Generates `numberOfElems` random coordinates for a canvas with elements of `elem
     |      o     o |
     ----------------
 
+Generates `numberOfElems` random coordinates for a canvas with elements of `elemSize`.
+
 takes:
 - `numberOfElems` (int): the number of elemets
 - `elemSize` (int): the size of a single element
 
 
 #### **`canvas.getGridCoords(numberOfRows, numberOfElems, elemSize)`**
-
-Generates `numberOfElems` grid coordinates with `numberOfRows` rows and `numberOfElems` / `numberOfRows` columns.
 
     ----------------
     |              |
@@ -43,6 +41,8 @@ Generates `numberOfElems` grid coordinates with `numberOfRows` rows and `numberO
     |              |
     ----------------
 
+Generates `numberOfElems` grid coordinates with `numberOfRows` rows and `numberOfElems` / `numberOfRows` columns.
+
 takes:
 - `numberOfRows` (int): the number of rows in the grid (might create one more if the numberOfElem / rows is not an int)
 - `numberOfElems` (int): the number of elemets
@@ -50,8 +50,6 @@ takes:
 
 
 #### **`canvas.getTwoSidedCoords(numberOfRows, gap, numberOfElems, elemSize, direction)`**
-
-Generates `numberOfElems` split grid coordinates with `numberOfRows` rows and `numberOfElems` / `numberOfRows` columns.
 
     ------------------
     |                |
@@ -61,12 +59,15 @@ Generates `numberOfElems` split grid coordinates with `numberOfRows` rows and `n
     |                |
     ------------------
 
+Generates `numberOfElems` split grid coordinates with `numberOfRows` rows and `numberOfElems` / `numberOfRows` columns.
+
 takes:
 - `numberOfRows` (int): the number of rows in the grid (might create one more if the numberOfElem / rows is not an int)
 - `gap` (int): the gap between the two sides
 - `numberOfElems` (int): the number of elemets
 - `elemSize` (int): the size of a single element
 - `direction` (string): the direction specifies how the items are placed on the canvas (can be: 'row', 'column' or 'sideRow')
+
 
 
     direction: 'row'
@@ -80,6 +81,7 @@ takes:
     ----------------
 
 
+
     direction: 'sideRow'
 
     ----------------
@@ -89,6 +91,7 @@ takes:
     |   оxx  xxx   |
     |              |
     ----------------
+
 
 
     direction: 'column'
