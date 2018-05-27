@@ -81,52 +81,57 @@ var createCanvas = function(canvasElem) {
             }
         }
 
-        // placement of the coords
+        // coords' position on the canvas
         /*
-            000  00-
-            ---  ---
-            ---  ---
+            ----------------
+            |              |
+            |   000  00x   |
+            |   xxx  xxx   |
+            |   xxx  xxx   |
+            |              |
+            ----------------
         */ 
         if (direction === 'row' || direction === undefined) {
             coords = tempCoords;
         /*
-            000  ---
-            00-  ---
-            ---  ---
-        */
+            ----------------
+            |              |
+            |   000  xxx   |
+            |   00x  xxx   |
+            |   xxx  xxx   |
+            |              |
+            ----------------
+        */ 
         } else if (direction === 'sideRow') {
+            var leftPart = [];
+            var rightPart = [];
             for (var i=0; i<tempCoords.length; i++) {
                 if (i%columns < columns/2) {
-                    coords.push(tempCoords[i]);
-                }
-            }
-
-            for (var i=0; i<tempCoords.length; i++) {
-                if (i%columns >= columns/2) {
-                    coords.push(tempCoords[i]);
-                }
-            }
-        /*
-            00-  ---
-            00-  ---
-            0--  ---
-        */ 
-        /* } else if (direction === 'sideColumn') {
-            for (var i=0; i<tempCoords.length; i++) {
-                if (i === 0) {
-                    coords[i] = tempCoords[i];
-                }
-
-                if (i%2 === 0) {
-                    coords[i%2] = tempCoords[i];
+                    leftPart.push(tempCoords[i]);
                 } else {
-                    coords[columns - 1 + i] = tempCoords[i];
+                    rightPart.push(tempCoords[i]);
                 }
+            }
 
-                console.log(coords[i]);
-            }*/
+            coords = leftPart.concat(rightPart);
+        /*
+            ----------------
+            |              |
+            |   00x  xxx   |
+            |   00x  xxx   |
+            |   0xx  xxx   |
+            |              |
+            ----------------
+        */ 
+         } else if (direction === 'column') {
+            var idx;
+
+            for (var i=0; i<tempCoords.length; i++) {
+                idx = ((i%rows) * columns) + Math.floor(i/rows);
+                coords.push(tempCoords[idx]);
+            }
         }
-
+        
         return coords;
     };
 
