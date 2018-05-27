@@ -12,9 +12,9 @@ returns:
 `getRandomCoords`, `getGridCoords`, `getTwoSidedCoords` and `draw`.
 
 
-#### Generating coordinates
+### Generating coordinates
 
-**`canvas.getRandomCoords(numberOfElems, elemSize)`**
+#### **`canvas.getRandomCoords(numberOfElems, elemSize)`**
 
 Generates `numberOfElems` random coordinates for a canvas with elements of `elemSize`.
 
@@ -31,7 +31,7 @@ takes:
 - `elemSize` (int): the size of a single element
 
 
-**`canvas.getGridCoords(numberOfRows, numberOfElems, elemSize)`**
+#### **`canvas.getGridCoords(numberOfRows, numberOfElems, elemSize)`**
 
 Generates `numberOfElems` grid coordinates with `numberOfRows` rows and `numberOfElems` / `numberOfRows` columns.
 
@@ -49,7 +49,7 @@ takes:
 - `elemSize` (int): the size of a single element
 
 
-**`canvas.getTwoSidedCoords(numberOfRows, gap, numberOfElems, elemSize, direction)`**
+#### **`canvas.getTwoSidedCoords(numberOfRows, gap, numberOfElems, elemSize, direction)`**
 
 Generates `numberOfElems` split grid coordinates with `numberOfRows` rows and `numberOfElems` / `numberOfRows` columns.
 
