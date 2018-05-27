@@ -69,8 +69,8 @@ takes:
 - `direction` (string): the direction specifies how the items are placed on the canvas (can be: 'row', 'column' or 'sideRow')
 
 
+direction: 'row'
 
-    direction: 'row'
 
     ----------------
     |              |
@@ -81,8 +81,8 @@ takes:
     ----------------
 
 
+direction: 'sideRow'
 
-    direction: 'sideRow'
 
     ----------------
     |              |
@@ -91,10 +91,10 @@ takes:
     |   оxx  xxx   |
     |              |
     ----------------
+ 
 
+direction: 'column'
 
-
-    direction: 'column'
 
     ----------------
     |              |
