@@ -19,7 +19,8 @@ var shuffleComb = function(comb) {
 // returns: a list of objects with x and y properties
 var drawOnCanvas = function(canvasElem, trialInfo) {
     var canvas = createCanvas(document.getElementById('canvas'));
-    var coords = canvas.getRandomCoords(trialInfo.total, trialInfo.size);
+    var coords = canvas.getGridCoords(trialInfo.rows, trialInfo.total, trialInfo.size);
+
     for (var i=0; i<trialInfo.total; i++) {
         if (i < trialInfo.focalNumber) {
             canvas.draw(trialInfo.focalShape, trialInfo.size, coords[i].x, coords[i].y, trialInfo.focalColor);
