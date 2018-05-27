@@ -107,7 +107,7 @@ direction: 'column'
 
 ### Drawing on the canvas
 
-* **`canvas.draw(shape, size, x, y, color)`**
+#### **`canvas.draw(shape, size, x, y, color)`**
 
 Draws a single element on the canvas of `shape` shape, `color` color and `size` the center of which is on coordinates `x` and `y`.
 
