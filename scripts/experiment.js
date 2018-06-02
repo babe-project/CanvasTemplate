@@ -6,13 +6,15 @@ exp.customize = function() {
     this.global_data.startTime = Date.now();
 	
     // specify view order
-    this.views_seq = [intro, 
-					 instructions,
-                     practice,
-                     beginMainExp,
-					 main,
-                     postTest,
-                     thanks];
+    this.views_seq = [intro,
+					  beginMain,
+					  main,
+					  beginMainGrid,
+					  mainGrid,
+					  beginMainGridSplit,
+					  mainGridSplit,
+                      postTest,
+                      thanks];
 	
     // prepare information about trials (procedure)
 	// randomize main trial order, but keep practice trial order fixed

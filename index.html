@@ -58,7 +58,7 @@
 			{{/ title }}
 			{{# text }}
 			<section class="text-container">
-				<p class="text">{{ text }}</p>
+				<p class="text">{{{ text }}}</p>
 			</section>
 			{{/ text }}
 			{{# button }}
@@ -87,36 +87,15 @@
 		</view>
 		</script>
 
-		<!-- Practice trial view -->
-		<script id="practice-view" type="x-tmpl-mustache">
-		<div class="view">
-			{{# title }}
-			<h1>{{ title }}</h1>
-			{{/ title }}
-
-			<div class="stimulus-container">
-				<canvas id="canvas" height="300" width="600"></canvas>
-			</div>
-
-			{{# question }}
-			<p class="question">
-			{{ question }}
-			</p>
-			{{/ question }}
-
-			<button id="next">Next</button>
-		</div>
-		</script>
-
 		<!-- Begin Experiment view -->
 		<script id="begin-exp-view" type="x-tmpl-mustache">
 		<div class="view">
 			{{# text }}
 			<section class="text-container">
-				<p class="text">{{ text }}</p>
+				<p class="text">{{{ text }}}</p>
 			</section>
 			{{/ text }}
-			<button id="next">Begin Experiment</button>
+			<button id="next">Next</button>
 		</div>
 		</script>
 
