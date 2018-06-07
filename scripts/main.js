@@ -138,14 +138,14 @@ exp.submit = function() {
             var currentTrial = trials[i];
             for (var trialKey in currentTrial) {
                 if (t.hasOwnProperty(trialKey)) {
-					entry = String(currentTrial[trialKey])
+                    entry = String(currentTrial[trialKey])
                     output += "<td>" + entry.replace(/ /g, "&nbsp;") + "</td>";
                 }
             }
 
             for (var dataKey in data) {
                 if (data.hasOwnProperty(dataKey)) {
-					entry = String(data[dataKey])
+                    entry = String(data[dataKey])
                     output += "<td>" + entry.replace(/ /g, "&nbsp;") + "</td>";
                 }
             }
@@ -158,29 +158,60 @@ exp.submit = function() {
         return output;
     };
 
-	var flattenData = function(data){
-		var trials = data.trials;
-		delete data.trials;
-		var out = _.map(trials, function(t) {return _.merge(t, data);});
-		return out;
-	};
+    var flattenData = function(data){
+        var trials = data.trials;
+        delete data.trials;
+        var out = _.map(trials, function(t) {return _.merge(t, data);});
+        return out;
+    };
 
     // construct data object for output
     var data = {
         'author': config_deploy.author,
         'experiment_id': config_deploy.experiment_id,
         'description': config_deploy.description,
-		'trials': addEmptyColumns(exp.trial_data)
+        'trials': addEmptyColumns(exp.trial_data)
     };
-	
+
+    // parses the url to get the assignmentId and workerId
+    var getHITData = function() {
+        var url = window.location.href;
+        var qArray = url.split('?');
+        qArray = qArray[1].split('&');
+        var HITData = {};
+
+        for (var i=0; i<qArray.length; i++) {
+            HITData[qArray[i].split('=')[0]] = qArray[i].split('=')[1];
+        }
+
+        return HITData;
+    };
+    
     // add more fields depending on the deploy method
     if (config_deploy.is_MTurk) {
         var HITData = getHITData();
         // MTurk expects a key 'assignmentId' for the submission to work,
-		// that is why is it not consistent with the snake case that the other keys have
+        // that is why is it not consistent with the snake case that the other keys have
         data['assignmentId'] = HITData['assignmentId'];
         data['workerId'] = HITData['workerId'];
         data['HITId'] = HITData['HITId'];
+
+        // creates a form with assignmentId input for the submission ot MTurk
+        var form = jQuery('<form/>', {
+            id: 'mturk-submission-form',
+            action: config_deploy.MTurk_server
+        }).appendTo('.thanks-templ')
+        var dataForMTurk = jQuery('<input/>', {
+            type: 'hidden',
+            name: 'data'
+        }).appendTo(form);
+        // MTurk expects a key 'assignmentId' for the submission to work,
+        // that is why is it not consistent with the snake case that the other keys have
+        var assignmentId = jQuery('<input/>', {
+            type: 'hidden',
+            name: 'assignmentId',
+            value: HITData['assignmentId']
+        }).appendTo(form);
     } else if (config_deploy.deployMethod === 'Prolific') {
         console.log();
     } else if (config_deploy.deployMethod === 'directLink'){
@@ -194,20 +225,6 @@ exp.submit = function() {
     // merge in global data accummulated so far
     // this could be unsafe if 'exp.global_data' contains keys used in 'data'!!
     data = _.merge(exp.global_data, data);
-	
-    // parses the url to get thr assignmentId and workerId
-    var getHITData = function() {
-        var url = window.location.href;
-        var qArray = url.split('?');
-        qArray = qArray[1].split('&');
-        var HITData = {};
-
-        for (var i=0; i<qArray.length; i++) {
-            HITData[qArray[i].split('=')[0]] = qArray[i].split('=')[1];
-        }
-
-        return HITData;
-    };
 
     // if the experiment is set to live (see config.js liveExperiment)
     // the results are sent to the server
@@ -215,11 +232,11 @@ exp.submit = function() {
     // the results are displayed on the thanks slide
     if (config_deploy.liveExperiment) {
         console.log('submits');
-        submitResults(config_deploy.contact_email, config_deploy.submissionURL, data);
-//		submitResults(config_deploy.contact_email, config_deploy.submissionURL, flattenData(data));
+    // submitResults(config_deploy.contact_email, config_deploy.submissionURL, data);
+        submitResults(config_deploy.contact_email, config_deploy.submissionURL, flattenData(data));
     } else {
         // hides the 'Please do not close the tab.. ' message in debug mode
-		console.log(data)
+        console.log(data)
         $('.warning-message').addClass('nodisplay');
         jQuery('<h3/>', {
             text: 'Debug Mode'
