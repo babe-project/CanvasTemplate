@@ -69,8 +69,8 @@ takes:
 - `direction` (string): the direction specifies how the items are placed on the canvas (can be: 'row', 'column' or 'sideRow')
 
 
+direction: 'row'
 
-    direction: 'row'
 
     ----------------
     |              |
@@ -81,8 +81,8 @@ takes:
     ----------------
 
 
+direction: 'sideRow'
 
-    direction: 'sideRow'
 
     ----------------
     |              |
@@ -91,10 +91,10 @@ takes:
     |   оxx  xxx   |
     |              |
     ----------------
+ 
 
+direction: 'column'
 
-
-    direction: 'column'
 
     ----------------
     |              |
@@ -107,7 +107,7 @@ takes:
 
 ### Drawing on the canvas
 
-* **`canvas.draw(shape, size, x, y, color)`**
+#### **`canvas.draw(shape, size, x, y, color)`**
 
 Draws a single element on the canvas of `shape` shape, `color` color and `size` the center of which is on coordinates `x` and `y`.
 

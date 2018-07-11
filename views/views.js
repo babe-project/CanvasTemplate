@@ -2,9 +2,9 @@ var intro = {
     // introduction title
     "title": "Welcome!",
     // introduction text
-    "text": "Thank you for participating in our study. In this study, you will see pictures and click on buttons.",
+    "text": "This is a _babe template providing examples for drawing random shapes in random colors at different positions on the canvas. In the following you will see three blocks of examples that use different methods for positioning elements on the canvas: (i) random placement, (ii) grid placement, (iii) grid placement in blocks. See <a href='https://babe-project.github.io/babe_site/reuse/templates.html'>the _babe documentation</a> for more explanation.",
     // introduction's slide proceeding button text
-    "buttonText": "Begin experiment",
+    "buttonText": "Next",
     // render function renders the view
     render: function() {
         
@@ -25,71 +25,9 @@ var intro = {
     trials: 1
 }
 
-var instructions = {
-     // instruction's title
-    "title": "Instructions",
-    // instruction's text
-    "text": "On each trial, you will see a question and two response options. Please select the response option you like most. We start with two practice trials.",
-    // instuction's slide proceeding button text
-    "buttonText": "Go to practice trial",
-    render: function() {
 
-        viewTemplate = $("#instructions-view").html();
-        $('#main').html(Mustache.render(viewTemplate, {
-            title: this.title,
-            text: this.text,
-            button: this.buttonText
-        }));
-
-        // moves to the next view
-        $('#next').on('click', function(e) {
-            exp.findNextView();
-        }); 
-
-    },
-    trials: 1
-}
-
-var practice = {
-
-    trials: 3,
-
-    "title": "Practice trial",
-    render: function (CT) {
-
-		viewTemplate = $("#practice-view").html();
-        $('#main').html(Mustache.render(viewTemplate, {
-        title: this.title,
-        }));
-        startingTime = Date.now();
-        console.log(exp.trial_info.practice_trials[CT]);
-        // draws the shapes on the canvas
-        drawOnCanvas(document.getElementById('canvas'), exp.trial_info.practice_trials[CT]);
-
-        $('#next').on('click', function() {
-            RT = Date.now() - startingTime; // measure RT before anything else
-            trial_data = {
-                trial_type: "practice",
-                trial_number: CT+1,
-                focalShape: exp.trial_info.practice_trials[CT].focalShape,
-                otherShape: exp.trial_info.practice_trials[CT].otherShape,
-                focalNumber: exp.trial_info.practice_trials[CT].focalNumber,
-                otherNumber: exp.trial_info.practice_trials[CT].total - exp.trial_info.practice_trials[CT].focalNumber,
-                total: exp.trial_info.practice_trials[CT].total,
-                focalColor: exp.trial_info.practice_trials[CT].focalColor,
-                otherColor: exp.trial_info.practice_trials[CT].otherColor,
-                rows: exp.trial_info.practice_trials[CT].rows,
-                RT: RT
-            };
-            exp.trial_data.push(trial_data)
-            exp.findNextView();
-        });
-
-    }
-}
-
-var beginMainExp = {
-    "text": "Now that you have acquainted yourself with the procedure of the task, the actual experiment will begin.",
+var beginMain = {
+    "text": "Next you will see four trials in which a random number of two kinds of random geometrical shapes (triangles, squares or circles) with a random color (red, blue, yellow, or green) is <strong>displayed at a random position on the canvas</strong>.",
     render: function() {
 
         viewTemplate = $('#begin-exp-view').html();
@@ -108,7 +46,7 @@ var beginMainExp = {
 
 var main = {
 	
-	trials : 8,
+	trials : 4,
 	
     render : function(CT) {
 		
@@ -122,7 +60,135 @@ var main = {
         $('#filled').css('width', filled);
         console.log(exp.trial_info.main_trials[CT]);
         // draws the shapes on the canvas
-        drawOnCanvas(document.getElementById('canvas'), exp.trial_info.main_trials[CT]);
+        drawOnCanvas(document.getElementById('canvas'), 
+					 exp.trial_info.main_trials[CT], 
+					 'random');
+
+        $('#next').on('click', function() {
+            RT = Date.now() - startingTime; // measure RT before anything else
+            trial_data = {
+                trial_type: "main",
+                trial_number: CT + 1,
+                focalShape: exp.trial_info.main_trials[CT].focalShape,
+                otherShape: exp.trial_info.main_trials[CT].otherShape,
+                focalNumber: exp.trial_info.main_trials[CT].focalNumber,
+                otherNumber: exp.trial_info.main_trials[CT].total - exp.trial_info.main_trials[CT].focalNumber,
+                total: exp.trial_info.main_trials[CT].total,
+                focalColor: exp.trial_info.main_trials[CT].focalColor,
+                otherColor: exp.trial_info.main_trials[CT].otherColor,
+                rows: exp.trial_info.main_trials[CT].rows,
+                RT: RT
+            };
+            exp.trial_data.push(trial_data);
+            exp.findNextView();
+        });
+		
+        // record trial starting time
+        startingTime = Date.now();
+		
+    }
+};
+
+var beginMainGrid= {
+    "text": "Next you will see four trials in which a random number of two kinds of random geometrical shapes (triangles, squares or circles) with a random color (red, blue, yellow, or green) is <strong> displayed in a grid ordered by object type</strong>.",
+    render: function() {
+
+        viewTemplate = $('#begin-exp-view').html();
+        $('#main').html(Mustache.render(viewTemplate, {
+            text: this.text
+        }));
+
+        // moves to the next view
+        $('#next').on('click', function(e) {
+            exp.findNextView();
+        });
+
+    },
+    trials: 1
+}
+
+var mainGrid = {
+	
+	trials : 4,
+	
+    render : function(CT) {
+		
+		// fill variables in view-template
+        var viewTemplate = $('#main-view').html();
+        $('#main').html(Mustache.render(viewTemplate, {
+        }));
+		
+		// update the progress bar based on how many trials there are in this round
+        var filled = exp.currentTrialInViewCounter * (180 / exp.views_seq[exp.currentViewCounter].trials);
+        $('#filled').css('width', filled);
+        console.log(exp.trial_info.main_trials[CT]);
+        // draws the shapes on the canvas
+        drawOnCanvas(document.getElementById('canvas'), 
+					 exp.trial_info.main_trials[CT],
+					 'grid');
+
+        $('#next').on('click', function() {
+            RT = Date.now() - startingTime; // measure RT before anything else
+            trial_data = {
+                trial_type: "main",
+                trial_number: CT + 1,
+                focalShape: exp.trial_info.main_trials[CT].focalShape,
+                otherShape: exp.trial_info.main_trials[CT].otherShape,
+                focalNumber: exp.trial_info.main_trials[CT].focalNumber,
+                otherNumber: exp.trial_info.main_trials[CT].total - exp.trial_info.main_trials[CT].focalNumber,
+                total: exp.trial_info.main_trials[CT].total,
+                focalColor: exp.trial_info.main_trials[CT].focalColor,
+                otherColor: exp.trial_info.main_trials[CT].otherColor,
+                rows: exp.trial_info.main_trials[CT].rows,
+                RT: RT
+            };
+            exp.trial_data.push(trial_data);
+            exp.findNextView();
+        });
+		
+        // record trial starting time
+        startingTime = Date.now();
+		
+    }
+};
+
+var beginMainGridSplit = {
+    "text": "Next you will see four trials in which a random number of two kinds of random geometrical shapes (triangles, squares or circles) with a random color (red, blue, yellow, or green) is <strong> displayed in two block of grids</strong>.",
+    render: function() {
+
+        viewTemplate = $('#begin-exp-view').html();
+        $('#main').html(Mustache.render(viewTemplate, {
+            text: this.text
+        }));
+
+        // moves to the next view
+        $('#next').on('click', function(e) {
+            exp.findNextView();
+        });
+
+    },
+    trials: 1
+}
+
+var mainGridSplit = {
+	
+	trials : 4,
+	
+    render : function(CT) {
+		
+		// fill variables in view-template
+        var viewTemplate = $('#main-view').html();
+        $('#main').html(Mustache.render(viewTemplate, {
+        }));
+		
+		// update the progress bar based on how many trials there are in this round
+        var filled = exp.currentTrialInViewCounter * (180 / exp.views_seq[exp.currentViewCounter].trials);
+        $('#filled').css('width', filled);
+        console.log(exp.trial_info.main_trials[CT]);
+        // draws the shapes on the canvas
+        drawOnCanvas(document.getElementById('canvas'), 
+					 exp.trial_info.main_trials[CT],
+					 'gridSplit');
 
         $('#next').on('click', function() {
             RT = Date.now() - startingTime; // measure RT before anything else
