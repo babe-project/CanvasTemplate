@@ -1,5 +1,5 @@
 var main_trials = [
-	{focalColor: "blue",
+    {focalColor: "blue",
      otherColor: "red",
      focalShape: "circle",
      focalNumber: 0,

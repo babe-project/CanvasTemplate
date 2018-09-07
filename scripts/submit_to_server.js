@@ -19,7 +19,6 @@ var submitResults = function(contactEmail, submissionURL, data) {
             console.log(textStatus);
 
             $('.warning-message').addClass('nodisplay');
-            $('.success-message').removeClass('nodisplay');
             $('.thanks-message').removeClass('nodisplay');
             $('.extra-message').removeClass('nodisplay');
 

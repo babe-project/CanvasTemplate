@@ -15,72 +15,77 @@ var exp = {};
 
 exp.init = function(){
 
-	// allocate storage room for global data, trial data, and trial info
+    // allocate storage room for global data, trial data, and trial info
     this.global_data = {};
     this.trial_data = [];
-	this.trial_info = {};
+    this.trial_info = {};
 
     // record current date and time
     this.global_data.startDate = Date();
     this.global_data.startTime = Date.now();
 
-	// call user-defined costumization function
-	exp.customize()
-	
-	// flatten views_seq after possible 'loop' insertions
-	exp.views_seq = _.flatten(exp.views_seq)
-	
-	// insert a Current Trial counter for each view
-	_.map(exp.views_seq, function(i) {i.CT = 0})
-	
-	// initialize procedure
-	this.currentViewCounter = 0;
+    // call user-defined costumization function
+    exp.customize()
+    
+    // flatten views_seq after possible 'loop' insertions
+    this.views_seq = _.flatten(this.views_seq);
+    // create Progress Bar/s
+    this.progress = this.initProgressBar();
+    this.progress.add();
+
+    // insert a Current Trial counter for each view
+    _.map(this.views_seq, function (i) {
+        i.CT = 0
+    });
+    
+    // initialize procedure
+    this.currentViewCounter = 0;
     this.currentTrialCounter = 0;
-	this.currentTrialInViewCounter = 0;
+    this.currentTrialInViewCounter = 0;
     this.currentView = this.findNextView();
-	
-	// user does not (should not) change the following information
-	// checks the config _deploy.deployMethod is MTurk or MTurkSandbox,
-	// sets the submission url to MTukr's servers
-	config_deploy.MTurk_server = config_deploy.deployMethod == "MTurkSandbox" ?
-		"https://workersandbox.mturk.com/mturk/externalSubmit" : // URL for MTurk sandbox
-		config_deploy.deployMethod == 'MTurk' ?
-		"https://www.mturk.com/mturk/externalSubmit" : // URL for live HITs on MTurk
-		""; // blank if deployment is not via MTurk
-	// if the config_deploy.deployMethod is not debug, then liveExperiment is true
-	config_deploy.liveExperiment = config_deploy.deployMethod !== "debug";
-	config_deploy.prolificCode = '9BTAOPQD';
-	config_deploy.is_MTurk = config_deploy.MTurk_server !== "";
-  config_deploy.submissionURL = config_deploy.deployMethod == "localServer"? "http://localhost:4000/api/submit_experiment": "https://procomprag.herokuapp.com/api/submit_experiment"
-	console.log("deployMethod: " + config_deploy.deployMethod);
-	console.log("live experiment: " + config_deploy.liveExperiment);
-	console.log("runs on MTurk: " + config_deploy.is_MTurk);
-	console.log("MTurk server: " + config_deploy.MTurk_server);
+    
+    // user does not (should not) change the following information
+    // checks the config _deploy.deployMethod is MTurk or MTurkSandbox,
+    // sets the submission url to MTukr's servers
+    config_deploy.MTurk_server = config_deploy.deployMethod == "MTurkSandbox" ?
+        "https://workersandbox.mturk.com/mturk/externalSubmit" : // URL for MTurk sandbox
+        config_deploy.deployMethod == 'MTurk' ?
+        "https://www.mturk.com/mturk/externalSubmit" : // URL for live HITs on MTurk
+        ""; // blank if deployment is not via MTurk
+    // if the config_deploy.deployMethod is not debug, then liveExperiment is true
+    config_deploy.liveExperiment = config_deploy.deployMethod !== "debug";
+    config_deploy.is_MTurk = config_deploy.MTurk_server !== "";
+    config_deploy.submissionURL = config_deploy.deployMethod == "localServer"? "http://localhost:4000/api/submit_experiment": "https://procomprag.herokuapp.com/api/submit_experiment"
+    console.log("deployMethod: " + config_deploy.deployMethod);
+    console.log("live experiment: " + config_deploy.liveExperiment);
+    console.log("runs on MTurk: " + config_deploy.is_MTurk);
+    console.log("MTurk server: " + config_deploy.MTurk_server);
 }
-
-
 
 // navigation through the views and steps in each view;
 // shows each view (in the order defined in 'config_general') for
-// the given number of steps (as defined in 'config_general')
-exp.findNextView = function() {
+// the given number of steps (as defined in the view's 'trial' property)
+exp.findNextView = function () {
     var currentView = this.views_seq[this.currentViewCounter];
     if (this.currentTrialInViewCounter < currentView.trials) {
-        currentView.render(currentView.CT);
+        currentView.render(currentView.CT, this.currentTrialInViewCounter);
     } else {
-		this.currentViewCounter ++;
+        this.currentViewCounter++;
         currentView = this.views_seq[this.currentViewCounter];
         this.currentTrialInViewCounter = 0;
         currentView.render(currentView.CT);
     }
-	// increment counter for how many trials we have seen of THIS view during THIS occurrence of it
-	this.currentTrialInViewCounter ++;
-	// increment counter for how many trials we have seen in the whole experiment
-	this.currentTrialCounter ++;
-	// increment counter for how many trials we have seen of THIS view during the whole experiment
-	this.views_seq[this.currentViewCounter].CT ++;
-	
-	return currentView;
+    // increment counter for how many trials we have seen of THIS view during THIS occurrence of it
+    this.currentTrialInViewCounter++;
+    // increment counter for how many trials we have seen in the whole experiment
+    this.currentTrialCounter++;
+    // increment counter for how many trials we have seen of THIS view during the whole experiment
+    currentView.CT++;
+    if (currentView.hasProgressBar) {
+        this.progress.update();
+    }
+
+    return currentView;
 };
 
 // submits the data
@@ -297,9 +302,13 @@ var prepareDataFromCSV = function(practiceTrialsFile, trialsFile) {
 
 // functions to expand 'loop' statements `from views_seq`
 var loop = function(arr, count, shuffleFlag) {
-	return _.flatMapDeep(_.range(count), function(i) {return arr})
-}
+    return _.flatMapDeep(_.range(count), function(i) {
+        return arr
+    })
+};
+
 var loopShuffled = function(arr, count) {
-	return _.flatMapDeep(_.range(count), function(i) {return _.shuffle(arr)})		
-	
-}
+    return _.flatMapDeep(_.range(count), function(i) {
+        return _.shuffle(arr)
+    })
+};

@@ -19,10 +19,10 @@ var shuffleComb = function(comb) {
 // returns: a list of objects with x and y properties
 var drawOnCanvas = function(canvasElem, trialInfo, displayType) {
     var canvas = createCanvas(document.getElementById('canvas'));
-	var coords = displayType == 'grid' ? 
-		  canvas.getGridCoords(trialInfo.rows, trialInfo.total, trialInfo.size) :
-		displayType == 'gridSplit' ? 
-		canvas.getTwoSidedCoords(trialInfo.rows, trialInfo.gap, trialInfo.total, trialInfo.size, 'sideRow') : canvas.getRandomCoords(trialInfo.total, trialInfo.size)
+    var coords = displayType == 'grid' ? 
+          canvas.getGridCoords(trialInfo.rows, trialInfo.total, trialInfo.size) :
+        displayType == 'gridSplit' ? 
+        canvas.getTwoSidedCoords(trialInfo.rows, trialInfo.gap, trialInfo.total, trialInfo.size, 'sideRow') : canvas.getRandomCoords(trialInfo.total, trialInfo.size)
 //    var coords = canvas.getRandomCoords(trialInfo.total, trialInfo.size);
     // var coords = canvas.getGridCoords(trialInfo.rows, trialInfo.total, trialInfo.size);
     // var coords = canvas.getTwoSidedCoords(trialInfo.rows, trialInfo.gap, trialInfo.total, trialInfo.size, 'sideRow');
