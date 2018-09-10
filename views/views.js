@@ -1,7 +1,7 @@
 var intro = {
     name: 'intro',
     title: "Welcome!",
-    text: "Thank you for participating in our study. In this study, you will judge whether each of 10 short sentences is true or false.",
+    text: "This is a _babe template providing examples for drawing random shapes in random colors at different positions on the canvas. In the following you will see three blocks of examples that use different methods for positioning elements on the canvas: (i) random placement, (ii) grid placement, (iii) grid placement in blocks. See <a href='https://babe-project.github.io/babe_site/reuse/templates.html'>the _babe documentation</a> for more explanation.",
     buttonText: "Begin experiment",
     render: function () {
         viewTemplate = $('#intro-view').html();
