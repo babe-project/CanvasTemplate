@@ -55,7 +55,7 @@ var intro = {
 var beginMain = {
     name: 'beginMain',
     text: "Next you will see four trials in which a random number of two kinds of random geometrical shapes (triangles, squares or circles) with a random color (red, blue, yellow, or green) is <strong>displayed at a random position on the canvas</strong>.",
-    render: function() {
+    render: function () {
 
         viewTemplate = $('#begin-exp-view').html();
         $('#main').html(Mustache.render(viewTemplate, {
@@ -63,7 +63,7 @@ var beginMain = {
         }));
 
         // moves to the next view
-        $('#next').on('click', function(e) {
+        $('#next').on('click', function (e) {
             exp.findNextView();
         });
 
@@ -73,18 +73,17 @@ var beginMain = {
 
 var main = {
     name: 'main',
-    render : function(CT) {
-        
+    render: function (CT) {
+
         // fill variables in view-template
         var viewTemplate = $('#main-view').html();
-        $('#main').html(Mustache.render(viewTemplate, {
-        }));
+        $('#main').html(Mustache.render(viewTemplate, {}));
         // draws the shapes on the canvas
-        drawOnCanvas(document.getElementById('canvas'), 
-                     exp.trial_info.main_trials[CT], 
-                     'random');
+        drawOnCanvas(document.getElementById('canvas'),
+            exp.trial_info.main_trials[CT],
+            'random');
 
-        $('#next').on('click', function() {
+        $('#next').on('click', function () {
             RT = Date.now() - startingTime; // measure RT before anything else
             trial_data = {
                 trial_type: "main",
@@ -102,18 +101,18 @@ var main = {
             exp.trial_data.push(trial_data);
             exp.findNextView();
         });
-        
+
         // record trial starting time
         startingTime = Date.now();
-        
+
     },
-    trials : 4
+    trials: 4
 };
 
 var beginMainGrid = {
     name: 'beginMainGrid',
     text: "Next you will see four trials in which a random number of two kinds of random geometrical shapes (triangles, squares or circles) with a random color (red, blue, yellow, or green) is <strong> displayed in a grid ordered by object type</strong>.",
-    render: function() {
+    render: function () {
 
         viewTemplate = $('#begin-exp-view').html();
         $('#main').html(Mustache.render(viewTemplate, {
@@ -121,7 +120,7 @@ var beginMainGrid = {
         }));
 
         // moves to the next view
-        $('#next').on('click', function(e) {
+        $('#next').on('click', function (e) {
             exp.findNextView();
         });
 
@@ -131,19 +130,18 @@ var beginMainGrid = {
 
 var mainGrid = {
     name: 'mainGrid',
-    render : function(CT) {
-        
+    render: function (CT) {
+
         // fill variables in view-template
         var viewTemplate = $('#main-view').html();
-        $('#main').html(Mustache.render(viewTemplate, {
-        }));
+        $('#main').html(Mustache.render(viewTemplate, {}));
 
         // draws the shapes on the canvas
-        drawOnCanvas(document.getElementById('canvas'), 
-                     exp.trial_info.main_trials[CT],
-                     'grid');
+        drawOnCanvas(document.getElementById('canvas'),
+            exp.trial_info.main_trials[CT],
+            'grid');
 
-        $('#next').on('click', function() {
+        $('#next').on('click', function () {
             RT = Date.now() - startingTime; // measure RT before anything else
             trial_data = {
                 trial_type: "main",
@@ -161,7 +159,7 @@ var mainGrid = {
             exp.trial_data.push(trial_data);
             exp.findNextView();
         });
-        
+
         // record trial starting time
         startingTime = Date.now();
     },
@@ -171,7 +169,7 @@ var mainGrid = {
 var beginMainGridSplit = {
     name: 'beginMainGridSplit',
     text: "Next you will see four trials in which a random number of two kinds of random geometrical shapes (triangles, squares or circles) with a random color (red, blue, yellow, or green) is <strong> displayed in two block of grids</strong>.",
-    render: function() {
+    render: function () {
 
         viewTemplate = $('#begin-exp-view').html();
         $('#main').html(Mustache.render(viewTemplate, {
@@ -179,7 +177,7 @@ var beginMainGridSplit = {
         }));
 
         // moves to the next view
-        $('#next').on('click', function(e) {
+        $('#next').on('click', function (e) {
             exp.findNextView();
         });
 
@@ -189,19 +187,18 @@ var beginMainGridSplit = {
 
 var mainGridSplit = {
     name: 'mainGridSplit',
-    render : function(CT) {
-        
+    render: function (CT) {
+
         // fill variables in view-template
         var viewTemplate = $('#main-view').html();
-        $('#main').html(Mustache.render(viewTemplate, {
-        }));
-        
-        // draws the shapes on the canvas
-        drawOnCanvas(document.getElementById('canvas'), 
-                     exp.trial_info.main_trials[CT],
-                     'gridSplit');
+        $('#main').html(Mustache.render(viewTemplate, {}));
 
-        $('#next').on('click', function() {
+        // draws the shapes on the canvas
+        drawOnCanvas(document.getElementById('canvas'),
+            exp.trial_info.main_trials[CT],
+            'gridSplit');
+
+        $('#next').on('click', function () {
             RT = Date.now() - startingTime; // measure RT before anything else
             trial_data = {
                 trial_type: "main",
@@ -219,9 +216,9 @@ var mainGridSplit = {
             exp.trial_data.push(trial_data);
             exp.findNextView();
         });
-        
+
         // record trial starting time
-        startingTime = Date.now();  
+        startingTime = Date.now();
     },
     trials: 4
 };
@@ -231,7 +228,7 @@ var postTest = {
     title: "Additional Info",
     text: "Answering the following questions is optional, but will help us understand your answers.",
     buttonText: "Continue",
-    render : function() {
+    render: function () {
 
         viewTemplate = $('#post-test-view').html();
         $('#main').html(Mustache.render(viewTemplate, {
@@ -240,7 +237,7 @@ var postTest = {
             buttonText: this.buttonText
         }));
 
-        $('#next').on('click', function(e) {
+        $('#next').on('click', function (e) {
             // prevents the form from submitting
             e.preventDefault();
 
@@ -264,7 +261,7 @@ var postTest = {
 var thanks = {
     name: 'thanks',
     message: "Thank you for taking part in this experiment!",
-    render: function() {
+    render: function () {
 
         viewTemplate = $('#thanks-view').html();
 
@@ -276,11 +273,10 @@ var thanks = {
                 thanksMessage: this.message,
             }));
         } else if (config_deploy.deployMethod === 'Prolific') {
-            var prolificURL = 'https://app.prolific.ac/submissions/complete?cc=' + config_deploy.prolificCode;
 
             $('main').html(Mustache.render(viewTemplate, {
                 thanksMessage: this.message,
-                extraMessage: "Please press the button below to confirm that you completed the expetiment with Prolific<br />" + '<a href=' + prolificURL + ' class="prolific-url">Confirm</a>'
+                extraMessage: "Please press the button below to confirm that you completed the expetiment with Prolific<br />" + '<a href=' + config_deploy.prolificURL + ' class="prolific-url">Confirm</a>'
             }));
         } else if (config_deploy.deployMethod === 'debug') {
             $('main').html(Mustache.render(viewTemplate, {}));
