@@ -167,15 +167,30 @@ exp.submit = function() {
     var flattenData = function(data){
         var trials = data.trials;
         delete data.trials;
-        var out = _.map(trials, function(t) {return _.merge(t, data);});
+
+        // The easiest way to avoid name clash is just to check the keys one by one and rename them if necessary.
+        // Though I think it's also the user's responsibility to avoid such scenarios...
+        var sample_trial = trials[0];
+        for (var trial_key in sample_trial) {
+            if (sample_trial.hasOwnProperty(trial_key)) {
+                if (data.hasOwnProperty(trial_key)) {
+                    // Much easier to just operate it once on the data, since if we also want to operate on the trials we'd need to loop through each one of them.
+                    var new_data_key = "glb_" + trial_key;
+                    data[new_data_key] = data[trial_key];
+                    delete data[trial_key];
+                }
+            }
+        }
+
+        var out = _.map(trials, function(t) {
+            return _.merge(t, data);
+        });
         return out;
     };
 
     // construct data object for output
     var data = {
-        'author': config_deploy.author,
         'experiment_id': config_deploy.experiment_id,
-        'description': config_deploy.description,
         'trials': addEmptyColumns(exp.trial_data)
     };
 
