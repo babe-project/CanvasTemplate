@@ -4,16 +4,16 @@ $('document').ready(function() {
     exp.init();
     // prevent scrolling when space is pressed (firefox does it)
     window.onkeydown = function(e) {
-    if (e.keyCode == 32 && e.target == document.body) {
-        e.preventDefault();
-    }
+        if (e.keyCode == 32 && e.target == document.body) {
+            e.preventDefault();
+        }
     };
 });
 
 // empty shell for 'exp' object; to be filled with life by the init() function
 var exp = {};
 
-exp.init = function(){
+exp.init = function() {
 
     // allocate storage room for global data, trial data, and trial info
     this.global_data = {};
@@ -95,7 +95,7 @@ exp.submit = function() {
         var columns = [];
 
         for (var i=0; i<trialData.length; i++) {
-            for (prop in trialData[i]) {
+            for (var prop in trialData[i]) {
                 if ((trialData[i].hasOwnProperty(prop)) && (columns.indexOf(prop) === -1)) {
                     columns.push(prop);
                 }
@@ -139,6 +139,7 @@ exp.submit = function() {
 
         output += "<tbody><tr>";
 
+        var entry = "";
         for (var i = 0; i < trials.length; i++) {
             var currentTrial = trials[i];
             for (var trialKey in currentTrial) {
@@ -241,8 +242,6 @@ exp.submit = function() {
     // submitResults(config_deploy.contact_email, config_deploy.submissionURL, data);
         submitResults(config_deploy.contact_email, config_deploy.submissionURL, flattenData(data));
     } else {
-        // hides the 'Please do not close the tab.. ' message in debug mode
-        console.log(data)
         $('.warning-message').addClass('nodisplay');
         jQuery('<h3/>', {
             text: 'Debug Mode'
@@ -277,7 +276,6 @@ var prepareDataFromCSV = function(practiceTrialsFile, trialsFile) {
         container[name] = results;
     };
 
-
     $.ajax({
         url: practiceTrialsFile,
         dataType: "text",
@@ -302,13 +300,13 @@ var prepareDataFromCSV = function(practiceTrialsFile, trialsFile) {
 
 // functions to expand 'loop' statements `from views_seq`
 var loop = function(arr, count, shuffleFlag) {
-    return _.flatMapDeep(_.range(count), function(i) {
+    return _.flatMapDeep(_.range(count), function() {
         return arr
     })
 };
 
 var loopShuffled = function(arr, count) {
-    return _.flatMapDeep(_.range(count), function(i) {
+    return _.flatMapDeep(_.range(count), function() {
         return _.shuffle(arr)
     })
 };
